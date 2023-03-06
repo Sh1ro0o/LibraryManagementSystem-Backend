@@ -10,5 +10,7 @@ namespace Library_Project.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public IList<BookAuthor> BookAuthors { get; set; }
     }
 }

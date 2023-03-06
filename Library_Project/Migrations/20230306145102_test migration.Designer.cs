@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_Project.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20230304160230_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20230306145102_test migration")]
+    partial class testmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,23 +73,15 @@ namespace Library_Project.Migrations
 
             modelBuilder.Entity("Library_Project.Models.BookAuthor", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("BookId", "AuthorId");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("BookId");
 
                     b.ToTable("BookAuthors");
                 });
@@ -162,13 +154,13 @@ namespace Library_Project.Migrations
             modelBuilder.Entity("Library_Project.Models.BookAuthor", b =>
                 {
                     b.HasOne("Library_Project.Models.Author", "Author")
-                        .WithMany()
+                        .WithMany("BookAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Library_Project.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("BookAuthors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -195,6 +187,16 @@ namespace Library_Project.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Library_Project.Models.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
+            modelBuilder.Entity("Library_Project.Models.Book", b =>
+                {
+                    b.Navigation("BookAuthors");
                 });
 #pragma warning restore 612, 618
         }

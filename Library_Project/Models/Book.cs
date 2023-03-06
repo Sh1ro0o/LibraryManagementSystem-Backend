@@ -12,5 +12,7 @@ namespace Library_Project.Models
         public string Category { get; set; }
 
         public string Publisher { get; set; }
+
+        public IList<BookAuthor> BookAuthors { get; set; }
     }
 }

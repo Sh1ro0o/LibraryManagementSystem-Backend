@@ -1,5 +1,7 @@
 using Library_Project;
 using Library_Project.Data;
+using Library_Project.Interfaces;
+using Library_Project.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -19,10 +21,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 //AddTransient adds injection at the very beginning
-builder.Services.AddTransient<Seed>(); 
+builder.Services.AddTransient<Seed>();
+
+//automapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//custom repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LibraryDbContext>(options =>

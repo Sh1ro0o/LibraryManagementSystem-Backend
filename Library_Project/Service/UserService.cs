@@ -1,13 +1,14 @@
 ﻿using Library_Project.Data;
 using Library_Project.Interfaces;
 using Library_Project.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Library_Project.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserService : IUserService
     {
         private readonly LibraryDbContext _context;
-        public UserRepository(LibraryDbContext context)
+        public UserService(LibraryDbContext context)
         {
             _context = context;
         }
@@ -30,7 +31,7 @@ namespace Library_Project.Repository
         }
 
         //ICollection cannot be edited but can only be read 
-        public ICollection<User> GetUsers()
+        public List<User> GetUsers()
         {
             return _context.Users.OrderBy(u => u.Id).ToList();
         }

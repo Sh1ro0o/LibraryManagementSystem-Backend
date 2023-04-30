@@ -2,6 +2,7 @@ using Library_Project;
 using Library_Project.Data;
 using Library_Project.Interfaces;
 using Library_Project.Repository;
+using Library_Project.Service;
 using Microsoft.EntityFrameworkCore;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -30,7 +31,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 
 //custom repositories
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddSwaggerGen();
 

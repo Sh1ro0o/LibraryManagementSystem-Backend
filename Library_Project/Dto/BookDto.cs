@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Library_Project.Models;
 
-namespace Library_Project.Models
+namespace Library_Project.Dto
 {
-    public class Book
+    public class BookDto
     {
-        [Key]
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -12,7 +11,6 @@ namespace Library_Project.Models
         public string Category { get; set; }
 
         public string Publisher { get; set; }
-
         public List<Author> Authors { get; set; }
     }
 }

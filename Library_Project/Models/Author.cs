@@ -11,6 +11,6 @@ namespace Library_Project.Models
 
         public string LastName { get; set; }
 
-        public IList<BookAuthor> BookAuthors { get; set; }
+        public List <Book> Books { get; set; }
     }
 }

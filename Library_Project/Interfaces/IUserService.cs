@@ -2,9 +2,9 @@
 
 namespace Library_Project.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
-        ICollection<User> GetUsers();
+        List<User> GetUsers();
         User GetUser(int userId);
         User GetUser(string username);
         bool UserExists(int userId);

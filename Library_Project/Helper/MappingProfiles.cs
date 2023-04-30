@@ -8,7 +8,11 @@ namespace Library_Project.Helper
     {
         public MappingProfiles() 
         {
-            CreateMap<User, UserDto>();    
+            //User
+            CreateMap<User, UserDto>();
+
+            //Book
+            CreateMap<Book, BookDto>();
         }
     }
 }

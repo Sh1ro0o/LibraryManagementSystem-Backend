@@ -5,7 +5,7 @@ namespace Library_Project.Interfaces
 {
     public interface IBookService
     {
-        List<Book> GetBooks();
+        List<BookDto> GetBooks();
         BookDto GetBook(int id);
         bool BookExists(int id);
     }

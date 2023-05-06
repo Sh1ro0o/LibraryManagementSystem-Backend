@@ -3,6 +3,7 @@ using Library_Project.Data;
 using Library_Project.Dto;
 using Library_Project.Interfaces;
 using Library_Project.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 
 namespace Library_Project.Service
@@ -19,7 +20,7 @@ namespace Library_Project.Service
 
         public BookDto GetBook(int id)
         {
-            Book book = _context.Books.Where(book => book.Id == id)
+            var book = _context.Books.Where(book => book.Id == id)
                                       .Include(book => book.Authors)
                                       .FirstOrDefault()!;
 
@@ -50,12 +51,43 @@ namespace Library_Project.Service
             return response;
         }
 
-        public List<Book> GetBooks()
+        public List<BookDto> GetBooks()
         {
-            //get proper repositories
-            var bookAuthors = _context.BookAuthors.ToList();
-            var books = _context.Books.OrderBy(b => b.Id).ToList();
-            return books;
+            var books = _context.Books.ToList();
+
+            if(books.Count == 0)
+            {
+                return _mapper.Map<List<Book>, List<BookDto>>(books); //we return empty List since no books were found
+            }
+
+            foreach (Book book in books)
+            {
+                var bookAuthors = _context.BookAuthors.Where(bookAuthor => bookAuthor.BookId == book.Id).ToList();
+                var author = _context.Authors.ToList();
+
+                List<Author> authorsToAdd = new List<Author>();
+
+                if (bookAuthors != null)
+                {
+                    foreach (BookAuthor bookAuthor in bookAuthors)
+                    {
+                        var tempAuthor = author.Where(a => a.Id == bookAuthor.AuthorId).FirstOrDefault();
+                        if (tempAuthor != null)
+                            authorsToAdd.Add(tempAuthor); //add author to list
+                    }
+                }
+
+                //if we added any authors we assign them to Book
+                if (authorsToAdd.Count > 0)
+                {
+                    book.Authors = authorsToAdd;
+                }
+            }
+
+            //mapping
+            List<BookDto> response = _mapper.Map<List<Book>, List<BookDto>>(books);
+
+            return response;
         }
 
         public bool BookExists(int id)

@@ -34,5 +34,19 @@ namespace Library_Project.Controllers
 
             return Ok(book);
         }
+
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(BookDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult GetBooks()
+        {
+            List<BookDto> books = _bookService.GetBooks();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(books);
+        }
     }
 }
